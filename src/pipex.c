@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:28:23 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/19 15:54:43 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:36:47 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid;
 	int		*fd;
 	int		i;
+	// int		fd_child;
+	// int		fd_dady;
 
 	fd = ft_calloc(sizeof(int), 5);
 	if (!fd)
@@ -59,6 +61,12 @@ int	main(int argc, char **argv, char **envp)
 			free(fd);
 			free_all(&all);
 		}
+		all.fd_child = open(argv[1], O_RDONLY, 0644);
+		all.fd_dady = open(argv[all.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (!all.fd_child && !all.fd_dady)
+		{
+			exit(-1);
+		}
 		while (++i < argc -3)
 		{
 			pid = fork();
@@ -73,6 +81,8 @@ int	main(int argc, char **argv, char **envp)
 			all.ct.ii++;
 			all.ct.test++;
 		}
+		close(all.fd_child);
+		close(all.fd_dady);
 		free_all(&all);
 	}
 	else
@@ -109,20 +119,10 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 {
 	char	**options;
 	char	*cmd_path;
-	int		fd_child;
-	int		fd_dady;
 	int		error;
-
-	fd_child = open(argv[1], O_RDONLY, 0644);
-	fd_dady = open(argv[all->argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-
+	
 	cmd_path = init_path(all, argv[all->ct.ii], envp);
 	
-	if (!fd_child && !fd_dady)
-	{
-		exit (-1);
-	}
-
 	options = ft_split(argv[all->ct.ii], ' ');
 	int i = -1;
 	while (options[++i])
@@ -130,24 +130,24 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 	
 	if (all->ct.test == 0)
 	{
-		dup2(fd_child, STDIN_FILENO);
+		dup2(all->fd_child, STDIN_FILENO);
 		dup2(fd[all->ct.turn + 1], STDOUT_FILENO);
 		close(fd[0]);
-		dprintf(2, "1: %d\n", all->ct.turn);
+		dprintf(2, "1_ct.turn: %d\n", all->ct.turn);
 	}
 	else if(all->ct.test == all->argc - 4)
 	{
 		dup2(fd[all->ct.turn], STDIN_FILENO);
-		dup2(fd_dady, STDOUT_FILENO);
+		dup2(all->fd_dady, STDOUT_FILENO);
 		close(fd[all->ct.turn + 2]);
-		dprintf(2, "3: %d\n", all->ct.turn);
+		dprintf(2, "3_ct.turn: %d\n", all->ct.turn);
 	}
 	else
 	{
 		dup2(fd[all->ct.turn], STDIN_FILENO);
 		dup2(fd[all->ct.turn + 3], STDOUT_FILENO);
 		close(fd[all->ct.turn + 2]);
-		dprintf(2, "2: %d\n", all->ct.turn);
+		dprintf(2, "2_ct.turn: %d\n", all->ct.turn);
 	}
 
 	dprintf(2, "RE: \n\n");
@@ -158,8 +158,6 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 		free_ptr(options);
 		free_all(all);
 	}
-	close(fd_child);
-	close(fd_dady);
 	free_ptr(options);
 }
 

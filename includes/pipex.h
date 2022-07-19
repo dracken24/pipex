@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:27:18 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/19 13:20:23 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/19 16:36:03 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_all {
 	char	**cmd;
 	int		argc;
 	int		*fd;
+	int		fd_child;
+	int		fd_dady;
 	t_len	len;
 	t_ct	ct;
 }	t_all;
