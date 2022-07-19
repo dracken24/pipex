@@ -1,0 +1,17 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/dracken24/Desktop/prog/42_en_cours/pipex'
+ 
+rm -f  ./ft_printf/*.o ./ft_printf/*.a ./src/*.o pipex 
+rm -fr ./objs
+echo [32m"BYE BYE""\033[0m"
+rm -f pipex 
+make -C ./ft_printf
+ 
+make: Circular re <- all dependency dropped.
+
+make[1]: Entering directory '/home/dracken24/Desktop/prog/42_en_cours/pipex/ft_printf'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/home/dracken24/Desktop/prog/42_en_cours/pipex/ft_printf'
+ 
+make: Leaving directory '/home/dracken24/Desktop/prog/42_en_cours/pipex'
+ 
