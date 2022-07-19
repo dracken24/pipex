@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:28:23 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/19 15:15:04 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:54:43 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ int	main(int argc, char **argv, char **envp)
 			pid = fork();
 			if (pid == -1)
 				free_all(&all);
-			all.ct.ii++;
 			if (pid == 0)
 				child(&all, argv, envp, fd);
 			
 			usleep(1000);
 			if (i >= 1)
 				all.ct.turn += 2;
+			all.ct.ii++;
 			all.ct.test++;
 		}
 		free_all(&all);
@@ -112,22 +112,18 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 	int		fd_child;
 	int		fd_dady;
 	int		error;
-	// int		i;
 
-	// all->ct.rec--;
-	// if (all->ct.rec > 0)
-	// 	child(all, argv, envp, fd);
 	fd_child = open(argv[1], O_RDONLY, 0644);
 	fd_dady = open(argv[all->argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
-	cmd_path = init_path(all, argv[all->ct.ii - 1], envp);
+	cmd_path = init_path(all, argv[all->ct.ii], envp);
 	
 	if (!fd_child && !fd_dady)
 	{
 		exit (-1);
 	}
-	// close(fd[all->ct.i_fd]);
-	options = ft_split(argv[all->ct.ii - 1], ' ');
+
+	options = ft_split(argv[all->ct.ii], ' ');
 	int i = -1;
 	while (options[++i])
 		ft_printf("Options: %s\n", options[i]);
@@ -154,7 +150,7 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 		dprintf(2, "2: %d\n", all->ct.turn);
 	}
 
-	dprintf(2, "RE: \n");
+	dprintf(2, "RE: \n\n");
 	
 	error = execve(cmd_path, options, envp);
 	if (error == -1)
