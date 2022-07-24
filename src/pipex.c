@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:28:23 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/19 16:36:47 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:18:43 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,60 +35,27 @@ char	*div_cmd(char *str)
 int	main(int argc, char **argv, char **envp)
 {
 	t_all	all;
-	pid_t	pid;
-	int		*fd;
-	int		i;
-	// int		fd_child;
-	// int		fd_dady;
+	// int		i;
+	int		exit_code;
+	
+	init_var(&all, argc);
 
-	fd = ft_calloc(sizeof(int), 5);
-	if (!fd)
-	{
-		free(fd);
-		exit(-1);
-	}
-	all.argc = argc;
-	all.ct.turn = 0;
-	all.ct.test = 0;
-	all.ct.rec = 0;
-	all.ct.ii = argc - 4;
-
-	i = -1;
+	// i = -1;
 	if (argc >= 5)
 	{
-		if (pipe(fd) == -1)
-		{
-			free(fd);
-			free_all(&all);
-		}
-		all.fd_child = open(argv[1], O_RDONLY, 0644);
-		all.fd_dady = open(argv[all.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (!all.fd_child && !all.fd_dady)
-		{
-			exit(-1);
-		}
-		while (++i < argc -3)
-		{
-			pid = fork();
-			if (pid == -1)
-				free_all(&all);
-			if (pid == 0)
-				child(&all, argv, envp, fd);
-			
-			usleep(1000);
-			if (i >= 1)
-				all.ct.turn += 2;
-			all.ct.ii++;
-			all.ct.test++;
-		}
-		close(all.fd_child);
-		close(all.fd_dady);
-		free_all(&all);
+		exit_code = pipex(&all, argv, envp);
 	}
 	else
+	{
+		free(all.fd);
+		free(all.pid);
+		free(all.pipe);
 		exit (-1);
-	free(fd);
-	return (0);
+	}
+	free(all.pid);
+	free(all.pipe);
+	free(all.fd);
+	return (exit_code);
 }
 
 char	*init_path(t_all *all, char *argv, char **envp)
@@ -115,75 +82,28 @@ char	*init_path(t_all *all, char *argv, char **envp)
 	return (ret);
 }
 
-void	child(t_all *all, char **argv, char **envp, int *fd)
+
+
+int	dady(t_all *all)
 {
-	char	**options;
-	char	*cmd_path;
-	int		error;
-	
-	cmd_path = init_path(all, argv[all->ct.ii], envp);
-	
-	options = ft_split(argv[all->ct.ii], ' ');
-	int i = -1;
-	while (options[++i])
-		ft_printf("Options: %s\n", options[i]);
-	
-	if (all->ct.test == 0)
-	{
-		dup2(all->fd_child, STDIN_FILENO);
-		dup2(fd[all->ct.turn + 1], STDOUT_FILENO);
-		close(fd[0]);
-		dprintf(2, "1_ct.turn: %d\n", all->ct.turn);
-	}
-	else if(all->ct.test == all->argc - 4)
-	{
-		dup2(fd[all->ct.turn], STDIN_FILENO);
-		dup2(all->fd_dady, STDOUT_FILENO);
-		close(fd[all->ct.turn + 2]);
-		dprintf(2, "3_ct.turn: %d\n", all->ct.turn);
-	}
-	else
-	{
-		dup2(fd[all->ct.turn], STDIN_FILENO);
-		dup2(fd[all->ct.turn + 3], STDOUT_FILENO);
-		close(fd[all->ct.turn + 2]);
-		dprintf(2, "2_ct.turn: %d\n", all->ct.turn);
-	}
+	pid_t	wait_pid;
+	int		status;
+	int		nbr;
+	int		ret;
 
-	dprintf(2, "RE: \n\n");
-	
-	error = execve(cmd_path, options, envp);
-	if (error == -1)
+	ret = 1;
+	nbr = all->nbr_cmd;
+	ft_printf("DAD: 01\n");
+	while(nbr > 0)
 	{
-		free_ptr(options);
-		free_all(all);
+		wait_pid = waitpid(all->pid[nbr], &status, 0);
+		if (wait_pid == -1)
+			ret = 0;
+		nbr--;
 	}
-	free_ptr(options);
+	ft_printf("DAD: 02\n");
+	return (ret);
 }
-
-// void	dady(t_all *all, char **argv, char **envp, int *fd)
-// {
-// 	int		error;
-// 	char	**options;
-
-// 	ft_printf("DAD: 01\n");
-// 	all->fd_dady = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	if (!all->fd_dady)
-// 		free_all(all);
-// 	options = ft_split(argv[3], ' ');
-// 	ft_printf("DAD: 02\n");
-// 	dup2(fd[0], STDIN_FILENO);
-// 	dup2(all->fd_dady, STDOUT_FILENO);
-// 	close(fd[1]);
-// 	error = execve(all->cmd_path2, options, envp);
-// 	if (error == -1)
-// 	{
-// 		free_ptr(options);
-// 		free_all(all);
-// 	}
-// 	free_ptr(options);
-// 	close(all->fd_dady);
-// }
 
 // void child(t_all *all, char **argv, char **envp, int *fd)
 // {

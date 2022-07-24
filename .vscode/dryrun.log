@@ -1,17 +1,103 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/dracken24/Desktop/prog/42_en_cours/pipex'
- 
 rm -f  ./ft_printf/*.o ./ft_printf/*.a ./src/*.o pipex 
 rm -fr ./objs
 echo [32m"BYE BYE""\033[0m"
 rm -f pipex 
 make -C ./ft_printf
+make[1]: Entering directory '/home/dracken24/Desktop/prog/42_en_cours/pipex/ft_printf'
+gcc -Wall -Werror -Wextra   -c -o ft_hexa.o ft_hexa.c
+gcc -Wall -Werror -Wextra   -c -o ft_printf.o ft_printf.c
+gcc -Wall -Werror -Wextra   -c -o ft_put.o ft_put.c
+gcc -Wall -Werror -Wextra   -c -o ft_itoa.o ft_itoa.c
+echo "COMPILE MOI CE PRINTF LA...""\033[0m"
+ar -rcs libftprintf.a ft_hexa.o ft_printf.o ft_put.o ft_itoa.o
+echo "MALADE CA A COMPILER !!!""\033[0m"
+make[1]: Leaving directory '/home/dracken24/Desktop/prog/42_en_cours/pipex/ft_printf'
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/pipex.c -o objs/pipex.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_split.c -o objs/lib/ft_split.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_strjoin.c -o objs/lib/ft_strjoin.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_strnstr.c -o objs/lib/ft_strnstr.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_substr.c -o objs/lib/ft_substr.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_strlen.c -o objs/lib/ft_strlen.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_strdup.c -o objs/lib/ft_strdup.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/free_ptr.c -o objs/lib/free_ptr.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/lib/ft_strchr.c -o objs/lib/ft_strchr.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/check/check.c -o objs/check/check.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/utils/utils.c -o objs/utils/utils.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/gnl/get_next_line.c -o objs/gnl/get_next_line.o
+mkdir -p ./objs/
+mkdir -p ./objs/lib
+mkdir -p ./objs/check
+mkdir -p ./objs/gnl
+mkdir -p ./objs/utils
+gcc -Wall -Werror -Wextra -c src/gnl/get_next_line_utils.c -o objs/gnl/get_next_line_utils.o
+echo [35m"COMPILATION DE PIPEX EN COURS...""\033[0m"
+cp ft_printf/libftprintf.a pipex
+gcc  ./objs/pipex.o  ./objs/lib/ft_split.o  ./objs/lib/ft_strjoin.o  ./objs/lib/ft_strnstr.o  ./objs/lib/ft_substr.o  ./objs/lib/ft_strlen.o  ./objs/lib/ft_strdup.o  ./objs/lib/free_ptr.o  ./objs/lib/ft_strchr.o  ./objs/check/check.o  ./objs/utils/utils.o  ./objs/gnl/get_next_line.o  ./objs/gnl/get_next_line_utils.o -Wall -Werror -Wextra ft_printf/libftprintf.a -o pipex
+echo [35m"PIPEX READY !!!""\033[0m"
+./pipex entry.txt "cat" "grep do" "wc" exit.txt
+make: Leaving directory '/home/dracken24/Desktop/prog/42_en_cours/pipex'
  
 make: Circular re <- all dependency dropped.
 
-make[1]: Entering directory '/home/dracken24/Desktop/prog/42_en_cours/pipex/ft_printf'
-make[1]: Nothing to be done for 'all'.
-make[1]: Leaving directory '/home/dracken24/Desktop/prog/42_en_cours/pipex/ft_printf'
- 
-make: Leaving directory '/home/dracken24/Desktop/prog/42_en_cours/pipex'
- 

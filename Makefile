@@ -6,7 +6,7 @@
 #    By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/19 16:09:57 by nadesjar          #+#    #+#              #
-#    Updated: 2022/07/19 13:52:41 by nadesjar         ###   ########.fr        #
+#    Updated: 2022/07/22 21:12:06 by nadesjar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ PATH_SRC	= ./src/
 PATH_lib	= ./src/lib/
 PATH_check	= ./src/check/
 PATH_GNL	= ./src/gnl/
+PATH_UTILS	= ./src/utils/
 PATH_B		= ./src/bonus/
 
 FILES 		= $(PATH_SRC)pipex.c \
@@ -31,6 +32,7 @@ FILES 		= $(PATH_SRC)pipex.c \
 			$(PATH_lib)ft_substr.c $(PATH_lib)ft_strlen.c $(PATH_lib)ft_strdup.c \
 			$(PATH_lib)free_ptr.c $(PATH_lib)ft_strchr.c \
 			$(PATH_check)check.c \
+			$(PATH_UTILS)utils.c \
 			$(PATH_GNL)get_next_line.c $(PATH_GNL)get_next_line_utils.c \
 
 OBJS 		= $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(FILES))
@@ -62,6 +64,7 @@ $(PATH_OBJS)%.o:	$(PATH_SRC)%.c
 	@mkdir -p $(PATH_OBJS)lib
 	@mkdir -p $(PATH_OBJS)check
 	@mkdir -p $(PATH_OBJS)gnl
+	@mkdir -p $(PATH_OBJS)utils
 	$(CC) $(CFLAGS) -c $< -o $@
 
 make_lib:

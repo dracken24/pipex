@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 20:44:21 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/13 16:18:34 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:15:43 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ char	*find_good_path(char **paths, char *cmd_path, char *cmd, t_all *all)
 void	free_all(t_all *all)
 {
 	(void)all;
-	// free(all->cmd_path1);
-	// free(all->cmd_path2);
-	// free(all->envp_path);
-	// free_ptr(all->cmd);
+	free(all->fd);
+	free(all->pid);
+	free(all->pipe);
 	exit(-1);
 }
