@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:16:54 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/22 21:16:36 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/23 21:53:12 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 		dup2(all->fd_child, STDIN_FILENO);
 		dup2(fd[all->ct.turn + 1], STDOUT_FILENO);
 		close(fd[0]);
-		dprintf(2, "IN: Child  Out: %d  Close: 0\n", all->ct.turn + 1);
+		// dprintf(2, "IN: Child  Out: %d  Close: 0\n", all->ct.turn + 1);
 		dprintf(2, "1_ct.turn: %d\n", all->ct.turn);
 		dprintf(2, "1_ct.ii: %d\n", all->ct.ii);
 	}
@@ -39,7 +39,7 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 		dup2(fd[all->ct.turn], STDIN_FILENO);
 		dup2(all->fd_dady, STDOUT_FILENO);
 		close(fd[all->ct.turn + 1]);
-		dprintf(2, "IN: %d  Out: Dady  Close: %d\n", all->ct.turn, all->ct.turn + 2);
+		// dprintf(2, "IN: %d  Out: Dady  Close: %d\n", all->ct.turn, all->ct.turn + 2);
 		dprintf(2, "3_ct.turn: %d\n", all->ct.turn);
 		dprintf(2, "1_ct.ii: %d\n", all->ct.ii);
 	}
@@ -47,8 +47,8 @@ void	child(t_all *all, char **argv, char **envp, int *fd)
 	{
 		dup2(fd[all->ct.turn], STDIN_FILENO);
 		dup2(fd[all->ct.turn + 3], STDOUT_FILENO);
-		close(fd[all->ct.turn + 2]);
-		dprintf(2, "IN: %d  Out: %d  Close: %d\n", all->ct.turn, all->ct.turn + 3, all->ct.turn +2);
+		close(fd[all->ct.turn + 1]);
+		// dprintf(2, "IN: %d  Out: %d  Close: %d\n", all->ct.turn, all->ct.turn + 3, all->ct.turn +2);
 		dprintf(2, "2_ct.turn: %d\n", all->ct.turn);
 		dprintf(2, "1_ct.ii: %d\n", all->ct.ii);
 	}

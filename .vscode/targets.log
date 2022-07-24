@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sat Jul 23 18:59:15 2022
+# Make data base, printed on Sat Jul 23 21:52:24 2022
 
 # Variables
 
@@ -131,6 +132,7 @@ MANPATH = /home/linuxbrew/.linuxbrew/share/man:
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
+ 
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
@@ -199,6 +201,7 @@ LS_COLORS =
 # automatic
 +F = $(notdir $+)
 # environment
+ 
 LESS = -R
 # environment
 DESKTOP_SESSION = ubuntu
@@ -285,6 +288,7 @@ GSETTINGS_SCHEMA_DIR = /snap/code/102/usr/share/glib-2.0/schemas
 # automatic
 <F = $(notdir $<)
 # environment
+ 
 SNAP_VERSION = 3b889b09
 # default
 SUFFIXES := 
@@ -308,7 +312,6 @@ XDG_MENU_PREFIX = gnome-
 WHITE = $(shell tput -Txterm setaf 7)
 # environment
 GDMSESSION = ubuntu
- 
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
@@ -350,6 +353,7 @@ objs/lib/ft_strlen.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 objs/lib/ft_split.o:
@@ -378,7 +382,7 @@ objs/gnl/get_next_line_utils.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 21:12:06.937903957
+#  Last modified 2022-07-23 21:52:04.242208643
 #  File has been updated.
 #  Successfully updated.
 
@@ -547,6 +551,6 @@ objs/lib/ft_strnstr.o:
 # strcache performance: lookups = 67 / hit rate = 41%
 # hash-table stats:
 # Load=39/8192=0%, Rehash=0, Collisions=0/67=0%
-# Finished Make data base on Sat Jul 23 18:59:15 2022
+# Finished Make data base on Sat Jul 23 21:52:24 2022
 
  
