@@ -1,0 +1,11 @@
+Makefile
+PIPEX_TESTER
+README.md
+ft_printf
+includes
+infile.txt
+objs
+outfile.txt
+pipex
+pipex.dSYM
+src

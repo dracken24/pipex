@@ -6,7 +6,7 @@
 #    By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/19 16:09:57 by nadesjar          #+#    #+#              #
-#    Updated: 2022/07/23 21:52:04 by nadesjar         ###   ########.fr        #
+#    Updated: 2022/07/27 01:03:05 by nadesjar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,19 +21,16 @@ RESET		= "\033[0m"
 
 PATH_OBJS 	= ./objs/
 PATH_SRC	= ./src/
-PATH_lib	= ./src/lib/
-PATH_check	= ./src/check/
-PATH_GNL	= ./src/gnl/
+PATH_LIB	= ./src/lib/
+PATH_CHECK	= ./src/check/
 PATH_UTILS	= ./src/utils/
-PATH_B		= ./src/bonus/
 
 FILES 		= $(PATH_SRC)pipex.c \
-			$(PATH_lib)ft_split.c $(PATH_lib)ft_strjoin.c $(PATH_lib)ft_strnstr.c \
-			$(PATH_lib)ft_substr.c $(PATH_lib)ft_strlen.c $(PATH_lib)ft_strdup.c \
-			$(PATH_lib)free_ptr.c $(PATH_lib)ft_strchr.c \
-			$(PATH_check)check.c \
+			$(PATH_LIB)ft_split.c $(PATH_LIB)ft_strjoin.c $(PATH_LIB)ft_strnstr.c \
+			$(PATH_LIB)ft_substr.c $(PATH_LIB)ft_strlen.c $(PATH_LIB)ft_strdup.c \
+			$(PATH_LIB)free_ptr.c $(PATH_LIB)ft_strchr.c \
+			$(PATH_CHECK)check.c \
 			$(PATH_UTILS)utils.c \
-			$(PATH_GNL)get_next_line.c $(PATH_GNL)get_next_line_utils.c \
 
 OBJS 		= $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(FILES))
 
@@ -49,21 +46,19 @@ REMOVE		= ./ft_printf/*.o \
 			./ft_printf/*.a \
 			./src/*.o pipex \
 
-all: re $(PRINTF) $(NAME)
+all: $(PRINTF) $(NAME)
 
 $(NAME): $(OBJS)
 	@echo $(LILAS)"COMPILATION DE PIPEX EN COURS..."$(RESET)
 	cp $(PRINTF_A) $(NAME)
 	gcc $(OBJS) $(CFLAGS) $(PRINTF_A) -o pipex
 	@echo $(LILAS)"PIPEX READY !!!"$(RESET)
-	./pipex entry.txt "cat" "grep do" "wc" exit.txt
-# cmd shell : cat entry.txt | grep do | wc >> exit.txt 
+#./pipex infile.txt "grep do" "wc" outfile.txt
 
 $(PATH_OBJS)%.o:	$(PATH_SRC)%.c
 	@mkdir -p $(PATH_OBJS)
 	@mkdir -p $(PATH_OBJS)lib
 	@mkdir -p $(PATH_OBJS)check
-	@mkdir -p $(PATH_OBJS)gnl
 	@mkdir -p $(PATH_OBJS)utils
 	$(CC) $(CFLAGS) -c $< -o $@
 

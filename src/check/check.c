@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 20:44:21 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/21 19:15:43 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/27 02:57:47 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*check_path(t_all *all, char *cmd, char **envp)
 	char	*cmd_path;
 
 	cmd_path = NULL;
+	paths = NULL;
 	all->ct.i = -1;
 	while (envp[++all->ct.i])
 	{
@@ -42,6 +43,7 @@ char	*find_path(t_all *all)
 	tmp = ft_calloc(sizeof(tmp), all->len.len + 1);
 	if (!tmp)
 	{
+		perror("Error, tmp <find_path>");
 		free(tmp);
 		exit(0);
 	}
@@ -55,7 +57,13 @@ char	*find_path(t_all *all)
 char	*find_good_path(char **paths, char *cmd_path, char *cmd, t_all *all)
 {
 	if (!paths)
-		free_all(all);
+	{
+		free(all->pid);
+		free(all->pipe);
+		free(all->fd);
+		perror("Error, path <find_good_path>");
+		exit(0);
+	}
 	paths = ft_split(all->envp_path, ':');
 	all->ct.i = -1;
 	while (paths[++all->ct.i])
@@ -74,11 +82,14 @@ char	*find_good_path(char **paths, char *cmd_path, char *cmd, t_all *all)
 	return (NULL);
 }
 
-void	free_all(t_all *all)
+void	free_all(t_all *all, char *str)
 {
-	(void)all;
+	if (ft_strnstr(str, "good", 4) == 0)
+		perror(str);
 	free(all->fd);
 	free(all->pid);
 	free(all->pipe);
-	exit(-1);
+	close(all->fd_child);
+	close(all->fd_dady);
+	exit(0);
 }
