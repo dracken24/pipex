@@ -6,7 +6,7 @@
 /*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:28:23 by nadesjar          #+#    #+#             */
-/*   Updated: 2022/07/27 03:14:56 by nadesjar         ###   ########.fr       */
+/*   Updated: 2022/07/27 04:24:10 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 	t_all	all;
 	int		exit_code;
 
+	if (argc < 5)
+		return (0);
 	init_var(&all, argc);
 	check_entry(&all, argv);
 	if (argc == 5)
